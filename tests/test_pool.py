@@ -118,7 +118,6 @@ class TestPool(TestCase):
     @mock.patch('sh.Command')
     @mock.patch('sh.tar', create=True)
     def test_main_error_tarball(self, Command, tar):
-        test_class = mirror.Mirror()
         Command().side_effect = ['pass']
         Command().side_effect = [
             sh.ErrorReturnCode_1(
