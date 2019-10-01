@@ -1,0 +1,11 @@
+.git
+.DS_Store
+dist
+*.egg-info
+__pycache__
+.coverage
+.idea
+bash
+.pytest_cache
+build
+*.sh
