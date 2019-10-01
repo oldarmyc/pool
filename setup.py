@@ -4,7 +4,7 @@ import setuptools
 import repo_mirror
 
 
-requirements = ['boto3', 'pyyaml', 'urllib3']
+requirements = ['boto3', 'pyyaml', 'urllib3', 'sh']
 test_requirements = ['mock', 'nose', 'flake8', 'pytest']
 
 
