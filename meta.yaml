@@ -1,0 +1,53 @@
+# Conda build file for package accord
+# To build: conda build accord
+
+package:
+  name: pool
+  version: '0.1.0'
+
+source:
+  path: .
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+  entry_points:
+    - pool=repo_mirror.pool:main
+  noarch: python
+
+requirements:
+  build:
+    - python >=3.6
+    - setuptools
+    - urllib3
+    - pyaml
+    - boto3
+    - sh
+
+  run:
+    - python >=3.6
+    - urllib3
+    - pyaml
+    - boto3
+    - sh
+
+test:
+  source_files:
+    - tests/*
+  requires:
+    - pytest
+    - pyaml
+    - boto3
+    - mock
+    - sh
+  commands:
+    - pytest
+
+about:
+  home: 'https://github.com/oldarmyc/pool'
+  license: 'Apache License, Version 2.0'
+  license_file: LICENSE
+  license_family: APACHE
+  summary: 'Library to run conda mirrors and generate airgap tarball'
+  description: 'Library to run conda mirrors and generate airgap tarball'
+  dev_url: 'https://github.com/oldarmyc/pool'
