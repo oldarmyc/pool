@@ -30,7 +30,7 @@ class Mirror(object):
             },
             'ae5-admin': {
                 'channel': 'https://conda.anaconda.org/ae5-admin',
-                'platforms': ['linux-64', 'noarch']
+                'platforms': ['noarch']
             }
         }
         self.setup_dir(self.mirror_directory)

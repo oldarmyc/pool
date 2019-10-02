@@ -13,7 +13,7 @@ DEFAULT_CHANNELS = {
     },
     'ae5-admin': {
         'channel': 'https://conda.anaconda.org/ae5-admin',
-        'platforms': ['linux-64', 'noarch']
+        'platforms': ['noarch']
     }
 }
 

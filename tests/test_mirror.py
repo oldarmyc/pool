@@ -213,7 +213,7 @@ class TestMirror(TestCase):
         test_class = mirror.Mirror()
         test_class.build_yaml(test_channel)
 
-        temp_paths = [f'{test_channel}-linux-64', f'{test_channel}-noarch']
+        temp_paths = [f'{test_channel}-noarch']
         for temp in temp_paths:
             if not os.path.isfile(f'mirrors/{temp}.yaml'):
                 assert False, 'Did not create yaml file as expected'
@@ -223,16 +223,6 @@ class TestMirror(TestCase):
 
             if not os.path.exists(f'mirrors/{temp}'):
                 assert False, 'Channel directory was not created'
-
-        yaml_contents = []
-        with open(f'mirrors/{test_channel}-linux-64.yaml', 'r') as f:
-            yaml_contents = f.readlines()
-
-        self.assertEqual(
-            yaml_contents,
-            models.TEST_LINUX_YAML,
-            'linux-64 yaml file contents are not expected values'
-        )
 
         yaml_contents = []
         with open(f'mirrors/{test_channel}-noarch.yaml', 'r') as f:
