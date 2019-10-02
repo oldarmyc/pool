@@ -31,42 +31,48 @@ def main():
     mirror = Mirror()
     successful_tarballs = []
 
-    # Download the packages and setup the channel dirs
+    # Run through all of the default channels
     for channel in mirror.channels.keys():
         print(f'Building yaml file for {channel}')
         mirror.build_yaml(channel)
-        try:
-            print(f'Running mirror for {channel}')
-            mirror.run_mirror(channel)
-        except Exception:
-            print(f'{channel} had an issue running the mirror')
-            continue
+        for platform in mirror.channels[channel]['platforms']:
+            temp_channel = f'{channel}-{platform}'
+            try:
+                print(f'Running mirror for {temp_channel}')
+                mirror.run_mirror(temp_channel)
+            except Exception:
+                print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+                print(f'{temp_channel} had an issue running the mirror')
+                continue
 
-        try:
-            print(f'Generating file list for {channel}')
-            tree = sh.Command('tree')
-            tree(
-                f'{mirror.mirror_directory}/{channel}',
-                _out=f'{mirror.mirror_directory}/{channel}/{channel}.txt'
-            )
-        except Exception:
-            print(f'{channel} had an issue getting the file list')
-            pass
+            try:
+                print(f'Generating file list for {temp_channel}')
+                tree = sh.Command('tree')
+                tree(
+                    f'{mirror.mirror_directory}/{temp_channel}',
+                    _out=(
+                        f'{mirror.mirror_directory}/{temp_channel}'
+                        f'/{temp_channel}.txt'
+                    )
+                )
+            except Exception:
+                print(f'{temp_channel} had an issue getting the file list')
+                pass
 
-        try:
-            temp_file = f'{channel}_{time.strftime("%Y%m%d")}.tar.gz'
-            print(f'Creating tarball for {channel}')
-            sh.tar(
-                '-czf',
-                temp_file,
-                '-C',
-                f'{mirror.mirror_directory}/',
-                channel
-            )
-            successful_tarballs.append(temp_file)
-        except Exception:
-            print(f'{channel} failed to generate the repo tarball')
-            pass
+            try:
+                temp_file = f'{temp_channel}_{time.strftime("%Y%m%d")}.tar.gz'
+                print(f'Creating tarball for {temp_channel}')
+                sh.tar(
+                    '-czf',
+                    temp_file,
+                    '-C',
+                    f'{mirror.mirror_directory}/',
+                    temp_channel
+                )
+                successful_tarballs.append(temp_file)
+            except Exception:
+                print(f'{temp_channel} failed to generate the repo tarball')
+                pass
 
     print('Starting upload to S3')
     upload_files(mirror, successful_tarballs)

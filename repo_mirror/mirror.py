@@ -110,15 +110,19 @@ class Mirror(object):
         if channel_info is None:
             return
 
-        base['platforms'] = channel_info.get('platforms')
-        base['channels'] = [channel_info.get('channel')]
-        base['mirror_dir'] = f'./{self.mirror_directory}/{channel_name}'
+        # Create yaml files for each platform to split them all up
+        for platform in channel_info.get('platforms'):
+            base['platforms'] = platform
+            base['channels'] = [channel_info.get('channel')]
 
-        self.setup_dir(f'mirrors/{channel_name}')
+            tmp_mirror = f'./{self.mirror_directory}/{channel_name}-{platform}'
+            base['mirror_dir'] = tmp_mirror
+            self.setup_dir(tmp_mirror)
 
-        # Determine where these need to go
-        with open(f'mirrors/{channel_name}.yaml', 'w') as yaml_file:
-            yaml.dump(base, yaml_file, default_flow_style=False)
+            with open(
+                f'{self.mirror_directory}/{channel_name}-{platform}.yaml', 'w'
+            ) as yaml_file:
+                yaml.dump(base, yaml_file, default_flow_style=False)
 
     def run_mirror(self, channel_name):
         cas_sync = sh.Command('cas-sync')

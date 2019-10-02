@@ -17,14 +17,22 @@ DEFAULT_CHANNELS = {
     }
 }
 
-TEST_YAML = [
+TEST_LINUX_YAML = [
     'channels:\n',
     '- https://conda.anaconda.org/ae5-admin\n',
     'check_md5: true\n',
     'fetch_installers: false\n',
-    'mirror_dir: ./mirrors/ae5-admin\n',
-    'platforms:\n',
-    '- linux-64\n',
-    '- noarch\n',
+    'mirror_dir: ./mirrors/ae5-admin-linux-64\n',
+    'platforms: linux-64\n',
+    'verbose: 2\n'
+]
+
+TEST_NOARCH_YAML = [
+    'channels:\n',
+    '- https://conda.anaconda.org/ae5-admin\n',
+    'check_md5: true\n',
+    'fetch_installers: false\n',
+    'mirror_dir: ./mirrors/ae5-admin-noarch\n',
+    'platforms: noarch\n',
     'verbose: 2\n'
 ]

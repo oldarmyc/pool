@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 
+import logging
 import mock
 import os
 import sh
@@ -12,17 +13,21 @@ from tests.fixtures import models
 from repo_mirror import mirror
 
 
+logging.getLogger('sh').setLevel(logging.ERROR)
+
+
 class TestMirror(TestCase):
     def setUp(self):
         pass
 
     def tearDown(self):
-        temp = 'ae5-admin'
-        if os.path.isfile(f'mirrors/{temp}.yaml'):
-            os.remove(f'mirrors/{temp}.yaml')
+        temp_paths = ['ae5-admin-linux-64', 'ae5-admin-noarch']
+        for item in temp_paths:
+            if os.path.isfile(f'mirrors/{item}.yaml'):
+                os.remove(f'mirrors/{item}.yaml')
 
-        if os.path.exists(f'mirrors/{temp}'):
-            os.rmdir(f'mirrors/{temp}')
+            if os.path.exists(f'mirrors/{item}'):
+                os.rmdir(f'mirrors/{item}')
 
         if os.path.exists('mirrors'):
             os.rmdir('mirrors')
@@ -208,23 +213,35 @@ class TestMirror(TestCase):
         test_class = mirror.Mirror()
         test_class.build_yaml(test_channel)
 
-        if not os.path.isfile(f'mirrors/{test_channel}.yaml'):
-            assert False, 'Did not create yaml file as expected'
+        temp_paths = [f'{test_channel}-linux-64', f'{test_channel}-noarch']
+        for temp in temp_paths:
+            if not os.path.isfile(f'mirrors/{temp}.yaml'):
+                assert False, 'Did not create yaml file as expected'
 
-        if not os.path.isfile(f'mirrors/{test_channel}.yaml'):
-            assert False, 'Did not create yaml file as expected'
+            if not os.path.isfile(f'mirrors/{temp}.yaml'):
+                assert False, 'Did not create yaml file as expected'
 
-        if not os.path.exists(f'mirrors/{test_channel}'):
-            assert False, 'Channel directory was not created'
+            if not os.path.exists(f'mirrors/{temp}'):
+                assert False, 'Channel directory was not created'
 
         yaml_contents = []
-        with open(f'mirrors/{test_channel}.yaml', 'r') as f:
+        with open(f'mirrors/{test_channel}-linux-64.yaml', 'r') as f:
             yaml_contents = f.readlines()
 
         self.assertEqual(
             yaml_contents,
-            models.TEST_YAML,
-            'yaml file contents are not expected values'
+            models.TEST_LINUX_YAML,
+            'linux-64 yaml file contents are not expected values'
+        )
+
+        yaml_contents = []
+        with open(f'mirrors/{test_channel}-noarch.yaml', 'r') as f:
+            yaml_contents = f.readlines()
+
+        self.assertEqual(
+            yaml_contents,
+            models.TEST_NOARCH_YAML,
+            'noarch yaml file contents are not expected values'
         )
 
     @mock.patch('sh.Command')
