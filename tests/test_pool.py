@@ -35,7 +35,7 @@ class TestPool(TestCase):
     def test_version(self):
         self.assertEqual(
             repo_mirror.__version__,
-            '0.1.0',
+            '0.1.1',
             'Version expected was not returned correctly'
         )
 
