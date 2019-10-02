@@ -23,7 +23,8 @@ TEST_LINUX_YAML = [
     'check_md5: true\n',
     'fetch_installers: false\n',
     'mirror_dir: ./mirrors/ae5-admin-linux-64\n',
-    'platforms: linux-64\n',
+    'platforms:\n',
+    '- linux-64\n',
     'verbose: 2\n'
 ]
 
@@ -33,6 +34,7 @@ TEST_NOARCH_YAML = [
     'check_md5: true\n',
     'fetch_installers: false\n',
     'mirror_dir: ./mirrors/ae5-admin-noarch\n',
-    'platforms: noarch\n',
+    'platforms:\n',
+    '- noarch\n',
     'verbose: 2\n'
 ]

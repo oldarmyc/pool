@@ -41,7 +41,6 @@ def main():
                 print(f'Running mirror for {temp_channel}')
                 mirror.run_mirror(temp_channel)
             except Exception:
-                print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
                 print(f'{temp_channel} had an issue running the mirror')
                 continue
 

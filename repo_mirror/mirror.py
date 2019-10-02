@@ -112,7 +112,7 @@ class Mirror(object):
 
         # Create yaml files for each platform to split them all up
         for platform in channel_info.get('platforms'):
-            base['platforms'] = platform
+            base['platforms'] = [platform]
             base['channels'] = [channel_info.get('channel')]
 
             tmp_mirror = f'./{self.mirror_directory}/{channel_name}-{platform}'
