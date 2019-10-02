@@ -16,12 +16,13 @@ def upload_files(mirror, all_tarballs):
         use_threads=True
     )
     s3 = boto3.client('s3')
+    monthly_directory = time.strftime("%Y_%m")
     for file_name in all_tarballs:
         print(f'Uploading {file_name} to S3')
         s3.upload_file(
             file_name,
             mirror.aws_bucket,
-            file_name,
+            f'{monthly_directory}/{file_name}',
             ExtraArgs={'ACL': 'public-read'},
             Config=upload_config
         )
