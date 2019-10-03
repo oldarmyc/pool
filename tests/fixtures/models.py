@@ -5,7 +5,7 @@ DEFAULT_CHANNELS = {
     },
     'msys2': {
         'channel': 'https://repo.anaconda.com/pkgs/msys2',
-        'platforms': ['win-64', 'noarch']
+        'platforms': ['win-64']
     },
     'r': {
         'channel': 'https://repo.anaconda.com/pkgs/r',
