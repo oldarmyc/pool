@@ -51,7 +51,7 @@ class TestMirror(TestCase):
         )
         self.assertEqual(
             test_class.aws_bucket,
-            'airgap-tarball',
+            'airgap.svc.anaconda.com',
             'Invalid defalut aws bucket'
         )
         if not os.path.exists('mirrors'):

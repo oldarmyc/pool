@@ -34,7 +34,7 @@ class Mirror(object):
             }
         }
         self.setup_dir(self.mirror_directory)
-        self.aws_bucket = 'airgap-tarball'
+        self.aws_bucket = 'airgap.svc.anaconda.com'
 
     def setup_dir(self, dir_path):
         if not os.path.exists(dir_path):
